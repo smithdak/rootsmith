@@ -43,7 +43,7 @@ Settings → Secrets and variables → Actions → **Variables** → new reposit
 
 Settings → Environments → **New environment** → `apply`:
 
-- [ ] Enable **Required reviewers** and add yourself — this is the second gate on every mutation, and it is free
+- [ ] Enable **Required reviewers** and add yourself — the second gate on every mutation. On private repos this protection rule needs GitHub Pro/Team; on the Free plan the environment still isolates the write tokens (I2) and the merge stays the sole approval (I3) — accept that explicitly or upgrade
 - [ ] Add environment secret `VERCEL_WRITE_TOKEN` (full scope — plan steps buy domains, create/delete projects)
 - [ ] Add environment secret `GH_WRITE_TOKEN` (PAT that can create and archive repos — plan steps act beyond this repo, which `github.token` cannot)
 

@@ -20,7 +20,7 @@ sequenceDiagram
   Note over GH,W: next nightly reconcile confirms the world moved
 ```
 
-Three gates stack on the path, each free: the PR review itself, the `runbook-plan` label + merged check in [the workflow's `if`](../.github/workflows/apply-on-merge.yml), and the `apply` environment's required-reviewer rule.
+Three gates stack on the path: the PR review itself, the `runbook-plan` label + merged check in [the workflow's `if`](../.github/workflows/apply-on-merge.yml), and — where the plan supports it (free on public repos, GitHub Pro+ on private ones) — the `apply` environment's required-reviewer rule.
 
 ## Anatomy of a plan
 

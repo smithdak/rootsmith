@@ -99,7 +99,7 @@ flowchart LR
   API -.->|"next nightly reconcile"| OK["convergence confirmed"]
 ```
 
-`runbook plan` computes every intended API call, commits the plan JSON plus matching manifest edits to a `runbook/*` branch (pure git plumbing — your working tree is never touched), and opens a PR labeled `runbook-plan`. Merging the PR **is** the approval: [`apply-on-merge`](./.github/workflows/apply-on-merge.yml) executes exactly the reviewed plan file — nothing re-planned — inside the `apply` environment, whose required-reviewer rule is a second, free gate.
+`runbook plan` computes every intended API call, commits the plan JSON plus matching manifest edits to a `runbook/*` branch (pure git plumbing — your working tree is never touched), and opens a PR labeled `runbook-plan`. Merging the PR **is** the approval: [`apply-on-merge`](./.github/workflows/apply-on-merge.yml) executes exactly the reviewed plan file — nothing re-planned — inside the `apply` environment, whose required-reviewer rule adds a second gate where the plan supports it (free on public repos; GitHub Pro+ on private ones — without it, the merge is the sole approval).
 
 > [!WARNING]
 > There is no other write path. No command, scheduled job, or MCP tool mutates a provider directly; write tokens exist **only** in the `apply` environment, released solely by `apply-on-merge` (I2/I3).
@@ -226,7 +226,7 @@ One-time, **on the private ops fork** — the public repo needs none of this. Re
 
 - [ ] Set repository variable `ROOTSMITH_OPS=true` — arms `drift-nightly` and `apply-on-merge`
 - [ ] Add the two read secrets to the repository
-- [ ] Create the `apply` environment **with required reviewers**, holding the two write tokens
+- [ ] Create the `apply` environment holding the two write tokens; add **required reviewers** if the plan supports it (GitHub Pro+ on private repos)
 - [ ] Approve the checked-in [`.mcp.json`](./.mcp.json) when Claude Code prompts (other clients: [docs/mcp.md](./docs/mcp.md))
 - [ ] Trigger `drift-nightly` once by hand (`workflow_dispatch`) and triage what it files
 

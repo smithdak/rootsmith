@@ -8,7 +8,7 @@ jobs:
     # ROOTSMITH_OPS gates it to the private ops fork, same as drift-nightly.
     if: vars.ROOTSMITH_OPS == 'true' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'runbook-plan')
     runs-on: ubuntu-latest
-    environment: apply   # configure required-reviewer protection on this environment (second gate, free)
+    environment: apply   # add required-reviewer protection here (second gate; needs GitHub Pro+ on private repos)
     steps:
       - uses: actions/checkout@v4
         with:
