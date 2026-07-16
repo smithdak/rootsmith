@@ -225,6 +225,7 @@ One-time, **on the private ops fork** — the public repo needs none of this. Re
 | `GH_WRITE_TOKEN` | `apply` environment | PAT: create/archive repos | executing merged plans |
 
 - [ ] Set repository variable `ROOTSMITH_OPS=true` — arms `drift-nightly` and `apply-on-merge`
+- [ ] Allow GitHub Actions to **create and approve pull requests** (Settings → Actions → General) — drift auto-PRs 403 without it
 - [ ] Add the two read secrets to the repository
 - [ ] Create the `apply` environment holding the two write tokens; add **required reviewers** if the plan supports it (GitHub Pro+ on private repos)
 - [ ] Approve the checked-in [`.mcp.json`](./.mcp.json) when Claude Code prompts (other clients: [docs/mcp.md](./docs/mcp.md))

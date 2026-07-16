@@ -52,6 +52,7 @@ Settings → Environments → **New environment** → `apply`:
 
 ### 3. First runs
 
+- [ ] Settings → Actions → General → Workflow permissions: enable **Allow GitHub Actions to create and approve pull requests** — reality-authoritative drift lands as auto-PRs, and this default-off toggle blocks them with an HTTP 403 (`gh api -X PUT repos/<owner>/<ops-repo>/actions/permissions/workflow -f default_workflow_permissions=read -F can_approve_pull_request_reviews=true` does the same)
 - [ ] Actions tab → `drift-nightly` → **Run workflow** — triage what it files; a freshly backfilled portfolio usually carries a finding or two
 - [ ] Labels `drift` and `runbook-plan` are created on demand by the tooling — nothing to pre-create
 - [ ] When ready to prove the write path: `rsm runbook plan park <venture>` on the lowest-stakes venture, review, merge, approve the environment run (M4's threshold)
