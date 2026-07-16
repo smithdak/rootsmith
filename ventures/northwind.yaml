@@ -1,0 +1,16 @@
+name: northwind
+status: parked
+domains:
+  - name: northwind.example
+    registrar: unknown
+    role: parked
+    basis: manual
+    verify_by: 2026-08-01
+    note: >-
+      FINDING (example, 2026-07-16): registrar unknown — demonstrates how dated
+      findings ride in manifests and surface as << flags in `rsm status`.
+dns_policy: observed
+notes: >-
+  Example venture in block style: entries carrying multi-line dated notes are
+  why automated edits are format-preserving (src/manifest-edit.ts) — a YAML
+  round-trip would destroy this institutional memory.

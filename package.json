@@ -1,0 +1,31 @@
+{
+  "name": "rootsmith",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "rootsmith": "./src/cli.ts"
+  },
+  "scripts": {
+    "cli": "tsx src/cli.ts",
+    "validate": "tsx src/cli.ts validate",
+    "status": "tsx src/cli.ts status",
+    "drift": "tsx src/cli.ts drift",
+    "mcp": "tsx src/mcp/server.ts",
+    "test": "node --import tsx --test src/manifest-edit.test.ts src/repos.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "js-yaml": "^4.1.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

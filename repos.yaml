@@ -1,0 +1,17 @@
+# GitHub repo registry — I1 extended to repos: every owned repo either belongs
+# to exactly one venture manifest (repo: field) or carries a disposition here.
+#   keep       — stays un-archived, not venture-tied
+#   archive    — desired archived; `runbook plan archive-repos` enforces it
+#   ignore     — not reconciled
+#   unassigned — quarantined by the nightly sweep; triage me
+# Example registry — a real deployment's nightly sweep backfills this file
+# automatically from live GitHub state (see docs/drift.md, repo-unmanifested).
+repos:
+  - { name: example-owner/rootsmith, disposition: keep, note: "control plane — this repo" }
+  - { name: example-owner/legacy-site, disposition: archive, note: "superseded 2026-05; runbook plan archive-repos converges it" }
+  - { name: example-owner/dotfiles, disposition: ignore, note: "personal — not reconciled (I4 posture)" }
+  - { name: example-owner/prototype-7, disposition: unassigned, note: "observed 2026-07-16 (I1 sweep) — triage me" }
+notes: >-
+  Dispositions are desired state (I5 manifest-authoritative). Repos claimed by
+  a venture manifest's repo: field do not appear here — exactly one owner per
+  repo is the invariant.

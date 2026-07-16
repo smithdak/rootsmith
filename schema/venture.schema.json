@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rootsmith/venture",
+  "title": "Venture manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "status", "domains"],
+  "properties": {
+    "name": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "status": { "enum": ["active", "parked", "sunsetting", "archived"] },
+    "domains": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "registrar", "role"],
+        "properties": {
+          "name": { "type": "string", "format": "hostname" },
+          "registrar": { "enum": ["vercel", "godaddy", "squarespace", "unknown"] },
+          "role": { "enum": ["canonical", "redirect", "parked"] },
+          "renews": { "type": "string", "format": "date" },
+          "basis": { "enum": ["rdap", "dashboard", "manual"] },
+          "verify_by": { "type": "string", "format": "date" },
+          "note": { "type": "string" },
+          "dns": {
+            "type": "array",
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["type", "name", "value"],
+              "properties": {
+                "type": { "enum": ["A", "AAAA", "CNAME", "MX", "TXT", "NS"] },
+                "name": { "type": "string" },
+                "value": { "type": "string" },
+                "priority": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "repo": { "type": "string" },
+    "deploy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider", "project"],
+      "properties": { "provider": { "enum": ["vercel"] }, "project": { "type": "string" } }
+    },
+    "email": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "provider": { "type": "string" },
+        "routes": { "type": "array", "items": { "type": "string", "format": "email" } }
+      }
+    },
+    "social": { "type": "object", "additionalProperties": { "type": "string" } },
+    "dns_policy": { "enum": ["managed", "observed"] },
+    "notes": { "type": "string" }
+  }
+}

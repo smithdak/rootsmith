@@ -1,0 +1,12 @@
+name: acme
+status: active
+domains:
+  - { name: acme.example,     registrar: vercel, role: canonical, renews: 2027-03-01, basis: rdap }
+  - { name: acme-app.example, registrar: vercel, role: redirect,  renews: 2027-03-01, basis: rdap }
+repo: github.com/example-owner/acme
+deploy: { provider: vercel, project: acme }
+dns_policy: observed
+notes: >-
+  Example venture. This public copy of rootsmith ships fictional manifests on
+  RFC 2606-reserved .example domains; a real deployment keeps its portfolio in
+  a private ops fork (README, "Running it for real").

@@ -1,0 +1,35 @@
+name: drift-nightly
+on:
+  schedule:
+    - cron: "17 6 * * *"   # jittered minute — be polite to RDAP endpoints
+  workflow_dispatch:
+permissions:
+  contents: write        # auto-PR branches for reality-authoritative manifest fixes (I5)
+  issues: write          # fingerprint-deduped drift issues
+  pull-requests: write
+jobs:
+  drift:
+    # Runs only where the real portfolio lives: set repo variable
+    # ROOTSMITH_OPS=true on the private ops fork. The public repo ships
+    # example manifests — filing nightly issues about them would be noise.
+    if: vars.ROOTSMITH_OPS == 'true'
+    runs-on: ubuntu-latest
+    # I2: this job holds READ tokens for providers. Its only write scope is on
+    # this control repo (issues + manifest auto-PRs) — never on the world.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - name: drift + audits -> fingerprint-deduped issues / manifest auto-PRs
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_READ_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          # fine-grained PAT, metadata+contents READ on all owned repos — the
+          # repo audits need account-wide visibility that github.token lacks
+          GH_REPOS_TOKEN: ${{ secrets.GH_READ_TOKEN }}
+        run: npm run cli -- drift --deep --report
+      # Issues/PRs are the drift signal; this run goes red only when the
+      # reconcile itself breaks. Note: PRs opened with github.token do not
+      # trigger CI on themselves (GitHub's workflow-loop guard) — CI runs when
+      # a human pushes to or reopens the PR.
